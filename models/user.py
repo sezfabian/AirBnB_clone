@@ -1,13 +1,13 @@
 #!/usr/bin/python3
-''' creates a user from the basemodel'''
+'''User Class Definitive Module'''
 
 from models.base_model import BaseModel
 
 
 class User(BaseModel):
-    '''Class implementation'''
-
-    email = ''
-    password = ''
-    first_name = ''
-    last_name = ''
+    '''Initiallize User Class with attributes'''
+    
+    email = ""
+    password = ""
+    first_name = ""
+    last_name = ""
