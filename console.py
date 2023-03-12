@@ -13,7 +13,9 @@ from models.city import City
 from models.amenity import Amenity
 storage = FileStorage()
 
+
 class HBNBCommand(cmd.Cmd):
+    """Defines console class"""
 
     __classes = {"BaseModel",
                  "User",
@@ -37,7 +39,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, line):
         """Usage: create <class>"""
-        """Creates a new class instance, saves it to the Json file and prints its id """
+        """Creates a new class instance,
+        saves it to the Json file and prints its id"""
         if len(line) == 0:
             print("** class name missing **")
         elif line not in self.__classes:
@@ -49,7 +52,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, line):
         """Usage: show <class name> <id>"""
-        """Prints the string representation of an instance based on the class name and id"""
+        """Prints the string representation
+        of an instance based on the class name and id"""
         my_args = line.split(" ")
         objects = storage.all()
         if len(my_args) == 0:
@@ -88,10 +92,11 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, line):
         """Usage: all <class name> or all"""
-        """Prints all string representation of all instances based or not on the class name"""
+        """Prints all string representation
+        of all instances based or not on the class name"""
         objects = storage.all()
         obj_out = []
-        if len(line) == 0 :
+        if len(line) == 0:
             for v in objects.values():
                 obj_out.append(v.__str__())
             print("{}".format(obj_out))
@@ -102,12 +107,14 @@ class HBNBCommand(cmd.Cmd):
             print(obj_out)
 
         elif line not in self.__classes:
-                print("** class doesn't exist **")
+            print("** class doesn't exist **")
 
     def do_update(self, line):
-        """Usage: update <class name> <id> <attribute name> "<attribute value>"""
-        """Updates an instance based on the class name and id by adding or updating attribute"""
-        args = line.split( )
+        """Usage: update <class name>
+        <id> <attribute name> "<attribute value>"""
+        """Updates an instance based on the
+        class name and id by adding or updating attribute"""
+        args = line.split()
         if len(args) == 0:
             print("** class name missing **")
         elif args[0] not in self.__classes:
@@ -136,7 +143,8 @@ class HBNBCommand(cmd.Cmd):
                     obj = objects["{}.{}".format(args[0], args[1])]
                     for k, v in eval(args[2]).items():
                         if (k in obj.__class__.__dict__.keys() and
-                            type(obj.__class__.__dict__[k]) in {str, int, float}):
+                            type(obj.__class__.__dict__[k])
+                                in {str, int, float}):
                             valtype = type(obj.__class__.__dict__[k])
                             obj.__dict__[k] = valtype(v)
                         else:
@@ -146,6 +154,7 @@ class HBNBCommand(cmd.Cmd):
     def do_clear(self, line):
         FileStorage.__objects = {}
         storage.save()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
