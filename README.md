@@ -1,11 +1,7 @@
-![hbnb](https://github.com/Gatwan/AirBnB_clone/blob/master/.img_dir/hbnb.png)
+![banner](https://i.imgur.com/RuiyIOR.jpg)
 
 # AirBnB clone
-This project is the first part of the AirBnB clone (HBnB) project for ALX SE students.
-The main objective of this project is to be an enrichment exercise
-to improve and apply concepts of higher-level programing
-done before and consists of implementing a specific command line interpreter
-to manage all of the functions and features of the project.
+This is a console application designed to mimic some of the functionalities of the popular online vacation rental marketplace, Airbnb. With this app, users can view, create, update, and delete properties and their corresponding attributes such as location, users, amenities, reviews, price, and more.
 
 ## Requirements of the project
 To do this project we had to learn:
@@ -33,7 +29,7 @@ This command line interpreter can:
 At first, you have to clone this repository in your machine using this command:
 
 ```bash
-$ git clone https://github.com/Gatwan/AirBnB_clone.git
+$ git clone https://github.com/sezfabian/AirBnB_clone.git
 ```
 
 Then, go inside it:
