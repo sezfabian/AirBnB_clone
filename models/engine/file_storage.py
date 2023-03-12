@@ -3,6 +3,13 @@
 import json
 import datetime
 import os
+from models.base_model import BaseModel
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 
 
 class FileStorage:
@@ -17,7 +24,6 @@ class FileStorage:
         FileStorage.__objects[key] = obj
 
     def classes(self):
-        '''Return Existing classes'''
         from models.base_model import BaseModel
         from models.amenity import Amenity
         from models.city import City
@@ -25,6 +31,7 @@ class FileStorage:
         from models.review import Review
         from models.state import State
         from models.user import User
+        '''Return Existing classes'''
         classes = {"BaseModel": BaseModel,
                    "Amenity": Amenity,
                    "City": City,
@@ -46,16 +53,23 @@ class FileStorage:
 
     def save(self):
         '''Saves a created instance'''
-        with open(FileStorage.__file_path, "w", encoding="utf-8") as file:
-            dict = {k: v.to_dict() for k, v in self.__objects.items()}
-            json.dump(dict, file)
+        my_dict = {}
+        for key, value in FileStorage.__objects.items():
+            my_dict[key] = value.to_dict()
+
+        with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
+            f.write(json.dumps(my_dict))
 
     def reload(self):
-        '''Reloads saved data in json file'''
-        if os.path.isfile(self.__file_path) \
-                is True and os.path.getsize(self.__file_path) != 0:
-            with open(FileStorage.__file_path, "r", encoding="utf-8") as file:
-                obj_dict = json.load(file)
-                obj_dict = {k: self.classes()[v["__class__"]](**v)
-                            for k, v in obj_dict.items()}
-                FileStorage.__objects.update(obj_dict)
+        """
+        deserializes the JSON file to __objects
+        """
+        try:
+            with open(FileStorage.__file_path, mode='r') as f:
+                r = json.load(f)
+                for k, v in r.items():
+                    cls_name = k.split('.')[0]
+                    my_obj = eval(cls_name)(**v)
+                    self.new(my_obj)
+        except FileNotFoundError:
+            pass
