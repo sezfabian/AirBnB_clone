@@ -1,8 +1,9 @@
-#/usr/bin/python3
+#!/usr/bin/python3
 """File Storage Module"""
 import json
 import datetime
 import os
+
 
 class FileStorage:
     __file_path = "file.json"
@@ -16,6 +17,7 @@ class FileStorage:
         FileStorage.__objects[key] = obj
 
     def classes(self):
+        '''Return Existing classes'''
         from models.base_model import BaseModel
         from models.amenity import Amenity
         from models.city import City
@@ -36,19 +38,22 @@ class FileStorage:
         """Returns the valid attributes and their types for classname."""
         attributes = {
             "BaseModel":
-                    {"id": str,
-                     "created_at": datetime.datetime,
-                     "updated_at": datetime.datetime}
-                    }
+                {"id": str,
+                    "created_at": datetime.datetime,
+                    "updated_at": datetime.datetime}
+                }
         return attributes
 
     def save(self):
+        '''Saves a created instance'''
         with open(FileStorage.__file_path, "w", encoding="utf-8") as file:
             dict = {k: v.to_dict() for k, v in self.__objects.items()}
             json.dump(dict, file)
 
     def reload(self):
-        if os.path.isfile(self.__file_path) is True and os.path.getsize(self.__file_path) != 0:
+        '''Reloads saved data in json file'''
+        if os.path.isfile(self.__file_path) \
+                is True and os.path.getsize(self.__file_path) != 0:
             with open(FileStorage.__file_path, "r", encoding="utf-8") as file:
                 obj_dict = json.load(file)
                 obj_dict = {k: self.classes()[v["__class__"]](**v)
