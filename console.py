@@ -58,7 +58,7 @@ class HBNBCommand(cmd.Cmd):
         of an instance based on the class name and id"""
         my_args = line.split(" ")
         objects = storage.all()
-        if len(my_args) == 0:
+        if len(line) == 0:
             print("** class name missing **")
         elif my_args[0] not in self.__classes:
             print("** class doesn't exist **")
@@ -76,7 +76,7 @@ class HBNBCommand(cmd.Cmd):
         """Deletes an instance based on the class name and id"""
         my_args = line.split(" ")
         objects = storage.all()
-        if len(my_args) == 0:
+        if len(line) == 0:
             print("** class name missing **")
         elif my_args[0] not in self.__classes:
             print("** class doesn't exist **")
@@ -156,4 +156,3 @@ class HBNBCommand(cmd.Cmd):
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
-
