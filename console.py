@@ -151,10 +151,6 @@ class HBNBCommand(cmd.Cmd):
                             obj.__dict__[k] = v
                 storage.save()
 
-    def do_clear(self, line):
-        FileStorage.__objects = {}
-        storage.save()
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
