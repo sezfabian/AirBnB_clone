@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Console 0.0.1 Module"""
 import cmd
+import re
 from models.base_model import BaseModel
 from models import FileStorage
 from models.engine.file_storage import FileStorage
@@ -38,6 +39,32 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """Do nothing upon receiving an empty line."""
         pass
+
+    def default(self, line):
+        """Allows different form inputs"""
+
+        __commands = {"all": self.do_all,
+                      "show": self.do_show,
+                      "destroy": self.do_destroy}
+        args = line.split('.')
+        if len(args) < 2:
+            print("*** Unknown syntax: {}".format(line))
+            return False
+        str1 = args[1]
+        str1 = str1.replace('(', '.')
+        str1 = str1.replace(')', '.')
+        mycmd = str1.split('.')
+        cmd = mycmd[0]
+        variables = "" + args[0]
+        for i in range(1, len(mycmd) - 1):
+            variables = variables + " " + mycmd[i]
+        variables = str(variables)
+
+        if cmd in __commands:
+            __commands[cmd](variables)
+        else:
+            print("*** Unknown syntax: {}".format(line))
+            return False
 
     def do_create(self, line):
         """Usage: create <class>"""
@@ -98,13 +125,14 @@ class HBNBCommand(cmd.Cmd):
         of all instances based or not on the class name"""
         objects = storage.all()
         obj_out = []
+        args = line.split(' ')
         if len(line) == 0:
             for v in objects.values():
                 obj_out.append(v.__str__())
             print("{}".format(obj_out))
-        elif line in self.__classes:
+        elif args[0] in self.__classes:
             for v in objects.values():
-                if line == v.__class__.__name__:
+                if args[0] == v.__class__.__name__:
                     obj_out.append(v.__str__())
             print(obj_out)
 
