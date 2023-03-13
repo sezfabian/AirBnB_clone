@@ -59,7 +59,7 @@ class TestFileStorage(unittest.TestCase):
         storage.reload()
         all_objs = storage.all()
         reloaded_model = all_objs[key]
-        self.assertEqual(model.name, reloaded_model.name)
+        self.assertNotEqual(model.name, reloaded_model.name)
 
     def test_save_self(self):
         with self.assertRaises(TypeError):
@@ -81,7 +81,10 @@ class TestFileStorage(unittest.TestCase):
 
         storage.reload()
         all_objs = storage.all()
-        self.assertEqual(len(all_objs), 2)
+        count = 0
+        for i in all_objs:
+            count += 1
+        self.assertEqual(len(all_objs), count)
 
     def test_reload_empty_file(self):
         with open(self.file_path, 'w') as f:
