@@ -46,6 +46,7 @@ class HBNBCommand(cmd.Cmd):
         __commands = {"all": self.do_all,
                       "show": self.do_show,
                       "count": self.do_count,
+                      "update": self.do_update,
                       "destroy": self.do_destroy}
         args = line.split('.')
         if len(args) < 2:
@@ -59,6 +60,7 @@ class HBNBCommand(cmd.Cmd):
         variables = "" + args[0]
         for i in range(1, len(mycmd) - 1):
             variables = variables + " " + mycmd[i]
+        variables = variables.replace(',', ' ')
         newline = str(variables.replace('"', ""))
 
         if cmd in __commands:
