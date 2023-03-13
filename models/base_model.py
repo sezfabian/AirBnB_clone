@@ -45,6 +45,5 @@ class BaseModel:
         _dict = self.__dict__.copy()
         _dict["__class__"] = type(self).__name__
         _dict["created_at"] = _dict["created_at"].isoformat()
-        _dict["updated_at"] = _dict["updated_at"].\
-            strftime("%Y-%m-%dT%H:%M:%S.%f")
+        _dict["updated_at"] = _dict["updated_at"].isoformat()
         return _dict
