@@ -45,6 +45,7 @@ class HBNBCommand(cmd.Cmd):
 
         __commands = {"all": self.do_all,
                       "show": self.do_show,
+                      "count": self.do_count,
                       "destroy": self.do_destroy}
         args = line.split('.')
         if len(args) < 2:
@@ -180,6 +181,25 @@ class HBNBCommand(cmd.Cmd):
                         else:
                             obj.__dict__[k] = v
                 storage.save()
+
+    def do_count(self, line):
+        """Usage: count <class name>> or <class name>.count()"""
+        """Retrieves the number of instances of a class"""
+        objects = storage.all()
+        count = 0
+        args = line.split(' ')
+        if len(line) == 0:
+            for v in objects.values():
+                count += 1
+            print(count)
+        elif args[0] in self.__classes:
+            for v in objects.values():
+                if args[0] == v.__class__.__name__:
+                    count += 1
+            print(count)
+
+        elif line not in self.__classes:
+            print("** class doesn't exist **")
 
 
 if __name__ == '__main__':
