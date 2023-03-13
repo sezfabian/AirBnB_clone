@@ -59,10 +59,10 @@ class HBNBCommand(cmd.Cmd):
         variables = "" + args[0]
         for i in range(1, len(mycmd) - 1):
             variables = variables + " " + mycmd[i]
-        variables = str(variables)
+        newline = str(variables.replace('"', ""))
 
         if cmd in __commands:
-            __commands[cmd](variables)
+            __commands[cmd](newline)
         else:
             print("*** Unknown syntax: {}".format(line))
             return False
