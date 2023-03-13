@@ -13,17 +13,28 @@ from models.user import User
 
 
 class FileStorage:
+    """
+    This class serializes instances to a JSON file and
+    deserializes JSON file to instances
+    """
     __file_path = "file.json"
     __objects = {}
 
     def all(self):
+        """Returns the dictionary __objects"""
         return FileStorage.__objects
 
     def new(self, obj):
+        """
+        Instantiates in __objects a new object with key <obj class name>.id
+        """
         key = "{}.{}".format(type(obj).__name__, obj.id)
         FileStorage.__objects[key] = obj
 
     def classes(self):
+        """
+        Returns valid classnames from models
+        """
         from models.base_model import BaseModel
         from models.amenity import Amenity
         from models.city import City
